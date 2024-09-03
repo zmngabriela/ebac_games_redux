@@ -1,5 +1,6 @@
-import { http, HttpResponse } from 'msw'
+import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+
 import { screen, waitFor } from '@testing-library/react'
 import { renderwithProvider } from '../../../utils/tests'
 import Produtos from '..'
@@ -44,8 +45,8 @@ const mocks = [
 ]
 
 const server = setupServer(
-  http.get('http://localhost:4000/produtos', () => {
-    return HttpResponse.json(mocks)
+  rest.get('http://localhost:4000/produtos', (req, res, ctx) => {
+    return res(ctx.json(mocks))
   })
 )
 
